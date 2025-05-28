@@ -1,4 +1,4 @@
-# GitHub Gist RAG API
+# GitHub Gist API
 
 A lightweight REST API for interacting with GitHub Gists, deployed on Cloudflare Workers. This API provides simple CRUD operations with JWT or Bearer token authentication and returns raw text responses. Supports dynamic Gist IDs for multi-tenant usage.
 
