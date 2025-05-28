@@ -1,0 +1,154 @@
+# GitHub Gist RAG API - Project Intelligence
+
+## Project Overview
+This project creates a simple REST API for interacting with GitHub Gists, deployed on Cloudflare Workers. It provides CRUD operations with Bearer token authentication and returns raw text responses.
+
+## Critical Implementation Paths
+
+### Authentication Flow
+1. **Always check Bearer token first** - Before any operation
+2. **Token isolation** - Client Bearer token is different from GitHub token
+3. **Never expose tokens** - Not in logs, errors, or responses
+
+### GitHub API Integration
+1. **Use Personal Access Token** with only `gist` scope
+2. **Handle rate limits** - Pass through X-RateLimit headers
+3. **Error handling** - Generic messages to client, detailed logs server-side
+
+### Response Patterns
+1. **GET operations** return raw text content (no JSON wrapping)
+2. **Write operations** return simple status messages
+3. **Errors** return plain text with appropriate HTTP codes
+
+## User Preferences
+
+### Code Style
+- TypeScript with strict mode
+- Minimal dependencies (only Hono framework)
+- Clear separation of concerns (auth, routes, gist-client)
+- Comprehensive error handling
+
+### Development Workflow
+1. Memory Bank documentation first
+2. Implementation follows documentation
+3. Test locally with Wrangler
+4. Deploy to Cloudflare Workers
+
+## Project-Specific Patterns
+
+### File Structure
+```
+github-gist-rag/
+├── memory-bank/          # Project documentation
+├── src/                  # TypeScript source
+│   ├── index.ts         # Main entry point
+│   ├── auth.ts          # Bearer token validation
+│   ├── gist-client.ts   # GitHub API wrapper
+│   ├── routes.ts        # REST endpoints
+│   └── types.ts         # TypeScript interfaces
+├── .dev.vars            # Local secrets (gitignored)
+├── wrangler.toml        # Cloudflare config
+└── package.json         # Dependencies
+```
+
+### Environment Variables
+- `BEARER_TOKEN` - API authentication
+- `GITHUB_TOKEN` - GitHub API access
+- `GIST_ID` - Target Gist identifier
+
+### Security Priorities
+1. Input validation on all user inputs
+2. Filename sanitization (no path traversal)
+3. Generic error messages (no stack traces)
+4. Token rotation reminders
+
+## Known Challenges
+
+### Cloudflare Workers Limits
+- 10ms CPU time (free tier)
+- 128MB memory limit
+- Must complete quickly
+
+### GitHub API Constraints
+- 1MB file size limit
+- 5,000 requests/hour
+- Must handle rate limiting gracefully
+
+## Evolution of Decisions
+
+### Why Hono Framework
+- Lightweight (12KB)
+- Built for edge runtimes
+- Simple routing with middleware support
+- TypeScript-first
+
+### Why Raw Text Responses
+- User specifically requested no JSON wrapping for GET
+- Simpler client integration
+- Less processing overhead
+- Direct content delivery
+
+### Why Simple Bearer Token
+- User wanted simplicity over complexity
+- No JWT overhead
+- Easy to implement and use
+- Sufficient for personal use
+
+## Tool Usage Patterns
+
+### Wrangler Commands
+```bash
+# Local development
+wrangler dev
+
+# Deploy to production
+wrangler deploy
+
+# Set secrets
+wrangler secret put SECRET_NAME
+
+# View logs
+wrangler tail
+```
+
+### Testing Pattern
+```bash
+# Always test with curl first
+curl -H "Authorization: Bearer TOKEN" \
+     http://localhost:8787/api/gist/file/test.txt
+```
+
+## Implementation Checklist
+
+When implementing:
+1. ✓ Read all Memory Bank files first
+2. ✓ Set up TypeScript with strict mode
+3. ✓ Use Hono for routing
+4. ✓ Implement auth middleware
+5. ✓ Create gist-client wrapper
+6. ✓ Add comprehensive error handling
+7. ✓ Test all endpoints locally
+8. ✓ Deploy to Cloudflare
+
+## Future Considerations
+
+### Potential Enhancements
+- Cloudflare KV for caching
+- Rate limiting middleware
+- Multiple Gist support
+- Webhook notifications
+
+### Monitoring Setup
+- Enable Cloudflare Analytics
+- Set up error alerts
+- Track API usage patterns
+- Monitor GitHub rate limits
+
+## Remember
+
+1. **Security First** - Never expose tokens or sensitive data
+2. **Simple Design** - Direct proxy pattern, minimal processing
+3. **User Experience** - Clear errors, fast responses, reliable operation
+4. **Documentation** - Keep Memory Bank updated with changes
+
+This project prioritizes simplicity, security, and reliability over features. When in doubt, choose the simpler solution that maintains these priorities.

@@ -1,0 +1,12 @@
+# Copy this file to .dev.vars and fill in your values
+# DO NOT commit .dev.vars to version control!
+
+# JWT secret for token validation (required for JWT auth)
+JWT_SECRET=your-jwt-secret-here
+
+# Legacy authentication (optional, for backward compatibility)
+BEARER_TOKEN=your-secret-bearer-token-here
+
+# Default GitHub credentials (optional, can be provided via JWT)
+GITHUB_TOKEN=ghp_your_github_token_here
+GIST_ID=your_gist_id_here

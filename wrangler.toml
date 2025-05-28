@@ -1,0 +1,29 @@
+name = "github-gist-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Worker configuration
+[build]
+command = ""
+
+# Environment-specific configuration
+[env.production]
+vars = { }
+
+# Development configuration
+[dev]
+port = 8787
+local_protocol = "http"
+
+# Add your secrets via CLI:
+# wrangler secret put JWT_SECRET
+# Optional: For backward compatibility
+# wrangler secret put BEARER_TOKEN
+# wrangler secret put GITHUB_TOKEN
+# wrangler secret put GIST_ID
+
+# Optional: Custom domain configuration
+# [[routes]]
+# pattern = "api.yourdomain.com/*"
+# zone_name = "yourdomain.com"

@@ -1,0 +1,38 @@
+{
+  "name": "github-gist-rag",
+  "version": "1.0.0",
+  "description": "Simple REST API for GitHub Gist operations via Cloudflare Workers",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "cloudflare-workers",
+    "github-gist",
+    "api",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240117.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "typescript": "^5.3.3",
+    "wrangler": "^3.22.4"
+  },
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
+    "hono": "^3.12.8",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
